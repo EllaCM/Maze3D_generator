@@ -34,7 +34,7 @@ public class DungeonGenerator : MonoBehaviour
     }*/
 
     public Vector3Int size;
-    public Vector3Int startPos = new Vector3Int(0,0,0);
+    public Vector3Int startPos = new Vector3Int(0, 0, 0);
     public GameObject room;
     //public Rule[] rooms;
     public Vector3 offset; //distance between each room inside the GenerateDungeon
@@ -54,13 +54,14 @@ public class DungeonGenerator : MonoBehaviour
         {
             for (int j = 0; j < size.y; j++)
             {
-                for (int k=0; k<size.z; k++) {
-                /*var newRoom = Instantiate(room, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
-                newRoom.UpdateRoom(board[Mathf.FloorToInt(i+j*size.x)].status);
-                newRoom.name += " " + i + "-" + j;*/
-                //Cell currentCell = board[(i + j * size.x)];
+                for (int k = 0; k < size.z; k++)
+                {
+                    /*var newRoom = Instantiate(room, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomBehaviour>();
+                    newRoom.UpdateRoom(board[Mathf.FloorToInt(i+j*size.x)].status);
+                    newRoom.name += " " + i + "-" + j;*/
+                    //Cell currentCell = board[(i + j * size.x)];
                     Cell currentCell = board[i][j][k];
-                    Vector3Int currentPos = new Vector3Int(i,j,k);
+                    Vector3Int currentPos = new Vector3Int(i, j, k);
                     if (currentCell.visited)
                     {
                         /*int randomRoom = -1;
@@ -93,7 +94,6 @@ public class DungeonGenerator : MonoBehaviour
                             }
                         }*/
 
-
                         Vector3 new_pos = new Vector3(i * offset.x, k * offset.z, -j * offset.y);
                         //print(new_pos);
                         var newRoom = Instantiate(room, new_pos, Quaternion.identity, transform).GetComponent<RoomBehaviour>();
@@ -113,7 +113,7 @@ public class DungeonGenerator : MonoBehaviour
 
         for (int i = 0; i < size.x; i++)
         {
-            List<List<Cell>> board1 = new List<List<Cell>> ();
+            List<List<Cell>> board1 = new List<List<Cell>>();
             for (int j = 0; j < size.y; j++)
             {
                 List<Cell> board2 = new List<Cell>();
@@ -135,18 +135,13 @@ public class DungeonGenerator : MonoBehaviour
         int m_nVisitedCells = 1;
         bool getNewPath = true;
 
-        while (m_nVisitedCells < 5000)
+        while (m_nVisitedCells < size.x*size.y*size.z)
         {
             int pos_x = currentPos[0];
             int pos_y = currentPos[1];
             int pos_z = currentPos[2];
 
             board[pos_x][pos_y][pos_z].visited = true;
-
-            if (currentPos[0]==size.x-1 && currentPos[1]==size.y-1 && currentPos[2] == size.z - 1)
-            {
-                break;
-            }
 
             //Check the cell's neighbors
             List<Vector3Int> neighbors = CheckNeighbors(currentPos);
@@ -155,6 +150,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if (path.Count == 0)
                 {
+
                     break;
                 }
                 else
@@ -183,28 +179,29 @@ public class DungeonGenerator : MonoBehaviour
                 int cz = currentPos[2];
 
                 // neighbors check
-                if (nx>cx && ny == cy && nz == cz && nx - 1 == cx)
+                if (nx > cx && ny == cy && nz == cz && nx - 1 == cx)
                 {//east
                     board[cx][cy][cz].status[2] = true; //status[2]--current cell open at right
                     currentPos = new Vector3Int(nx, ny, nz);
                     board[nx][ny][nz].status[3] = true;
 
                 }
-                else if (ny>cy && nx == cx && nz == cz && ny - 1 == cy)
+                else if (ny > cy && nx == cx && nz == cz && ny - 1 == cy)
                 {
                     //south
                     board[cx][cy][nz].status[1] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
                     board[nx][ny][nz].status[0] = true;
                 }
-                else if (ny == cy && nz==cz && nx + 1 == cx)
+                else if (ny == cy && nz == cz && nx + 1 == cx)
                 {
                     //west
                     board[cx][cy][cz].status[3] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
                     board[nx][ny][nz].status[2] = true;
                 }
-                else if (nx == cx && nz == cz && ny + 1 == cy){
+                else if (nx == cx && nz == cz && ny + 1 == cy)
+                {
                     //north
                     board[cx][cy][cz].status[0] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
@@ -226,7 +223,7 @@ public class DungeonGenerator : MonoBehaviour
                 }
                 m_nVisitedCells++;
             }
-            
+
         }
         PrintListPaths(paths);
         GenerateDungeon();
@@ -261,14 +258,14 @@ public class DungeonGenerator : MonoBehaviour
 
         // Print the current top
         // of the stack i.e., x
-        Debug.Log("x:" + p[0] + " y:"+ p[1] + " z:"+ p[2] + ";");
+        Debug.Log("x:" + p[0] + " y:" + p[1] + " z:" + p[2] + ";");
 
         // Proceed to print
         // remaining stack
         PrintStack(s);
 
         // Push the element back
-        s.Push(p);
+        // s.Push(p);
     }
 
     // if cell is not visited, add it to the neighbors[]
@@ -279,27 +276,27 @@ public class DungeonGenerator : MonoBehaviour
         int c_z = cpos[2];
         List<Vector3Int> neighbors = new List<Vector3Int>();
         //int count = board.Count * board[0].Count;
-        
+
         //check west neighbor
-        if (c_x-1>=0 && !board[c_x - 1][c_y][c_z].visited)
+        if (c_x - 1 >= 0 && !board[c_x - 1][c_y][c_z].visited)
         {
-            neighbors.Add(new Vector3Int(c_x-1, c_y, c_z)); //add position of neighbours
+            neighbors.Add(new Vector3Int(c_x - 1, c_y, c_z)); //add position of neighbours
         }
 
         //check east neighbor
         if (c_x + 1 < size.x && !board[c_x + 1][c_y][c_z].visited)
         {
-            neighbors.Add(new Vector3Int(c_x+1, c_y, c_z));
+            neighbors.Add(new Vector3Int(c_x + 1, c_y, c_z));
         }
 
         //check south neighbor
-        if ((c_y + 1) < size.y && !board[c_x][c_y+1][c_z].visited)
+        if ((c_y + 1) < size.y && !board[c_x][c_y + 1][c_z].visited)
         {
             neighbors.Add(new Vector3Int(c_x, c_y + 1, c_z));
         }
 
         //check north neighbor
-        if (c_y - 1>=0 && !board[c_x][c_y - 1][c_z].visited)
+        if (c_y - 1 >= 0 && !board[c_x][c_y - 1][c_z].visited)
         {
             neighbors.Add(new Vector3Int(c_x, c_y - 1, c_z));
         }
