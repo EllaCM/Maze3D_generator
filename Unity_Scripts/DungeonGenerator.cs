@@ -183,7 +183,7 @@ public class DungeonGenerator : MonoBehaviour
                 {//east
                     board[cx][cy][cz].status[2] = true; //status[2]--current cell open at right
                     currentPos = new Vector3Int(nx, ny, nz);
-                    board[nx][ny][nz].status[3] = true;
+                    //board[nx][ny][nz].status[3] = true;
 
                 }
                 else if (ny > cy && nx == cx && nz == cz && ny - 1 == cy)
@@ -191,35 +191,35 @@ public class DungeonGenerator : MonoBehaviour
                     //south
                     board[cx][cy][nz].status[1] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
-                    board[nx][ny][nz].status[0] = true;
+                    //board[nx][ny][nz].status[0] = true;
                 }
                 else if (ny == cy && nz == cz && nx + 1 == cx)
                 {
                     //west
                     board[cx][cy][cz].status[3] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
-                    board[nx][ny][nz].status[2] = true;
+                    //board[nx][ny][nz].status[2] = true;
                 }
                 else if (nx == cx && nz == cz && ny + 1 == cy)
                 {
                     //north
                     board[cx][cy][cz].status[0] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
-                    board[nx][ny][nz].status[1] = true;
+                    //board[nx][ny][nz].status[1] = true;
                 }
                 else if (nx == cx && ny == cy && nz - 1 == cz)
                 {
                     //up
                     board[cx][cy][cz].status[5] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
-                    board[nx][ny][nz].status[4] = true;
+                    //board[nx][ny][nz].status[4] = true;
                 }
                 else
                 {
                     //down
                     board[cx][cy][cz].status[4] = true;
                     currentPos = new Vector3Int(nx, ny, nz);
-                    board[nx][ny][nz].status[5] = true;
+                    //board[nx][ny][nz].status[5] = true;
                 }
                 m_nVisitedCells++;
             }
